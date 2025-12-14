@@ -1,0 +1,29 @@
+services:
+  mcp-service:
+    image: wantcat/trendradar-mcp:latest
+    container_name: trend-radar-mcp
+    ports:
+      - "127.0.0.1:3333:3333"
+    environment:
+      - LISTEN_ADDR=0.0.0.0
+      - LISTEN_PORT=3333
+      - TZ=Asia/Shanghai
+    restart: always
+    networks:
+      - mcp-net
+
+  # 2. Nginx 代理（对外暴露 80/443 端口，接收远程请求）
+  nginx-proxy:
+    image: nginx
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /data/nginx/conf.d:/etc/nginx/conf.d:ro
+    restart: always
+    networks:
+      - mcp-net
+
+networks:
+  mcp-net:
+    driver: bridge

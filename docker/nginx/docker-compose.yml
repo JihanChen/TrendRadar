@@ -5,8 +5,8 @@ services:
       dockerfile: ./docker/nginx/Dockerfile.mcp
     container_name: trend-radar-mcp
     volumes:
-      - ../config:/app/config:ro
-      - ../output:/app/output:ro
+      - ../../config:/app/config:ro
+      - ../../output:/app/output:ro
     ports:
       - "127.0.0.1:3333:3333"
     environment:
